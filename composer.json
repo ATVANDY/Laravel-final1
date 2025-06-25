@@ -1,0 +1,19 @@
+{
+    "require": {
+      "php": "^8.2",
+      "nunomaduro/collision": "^8.6",
+        "pestphp/pest": "^3.8"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "^11.5"
+    },
+    "config": {
+      "platform": {
+        "php": "8.2.12"
+      },
+      "secure-http": false,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+  }
