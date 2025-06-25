@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laravel-mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: laravel-mysql
+  template:
+    metadata:
+      labels:
+        app: laravel-mysql
+    spec:
+      containers:
+      - name: web-server
+        image: php:8.2-fpm
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_HOST
+          value: "mysql"
+        - name: DB_DATABASE
+          value: "<vandy>-db"
+        - name: DB_USERNAME
+          value: "root"
+        - name: DB_PASSWORD
+          value: "Hello@123"
+        volumeMounts:
+        - name: laravel-storage
+          mountPath: /var/www/html/storage
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: laravel-storage
+          mountPath: /var/www/html/storage
+      - name: mysql
+        image: mysql:latest
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_DATABASE
+          value: "<vandy>-db"
+        - name: MYSQL_ROOT_PASSWORD
+          value: "Hello@123"
+      volumes:
+      - name: laravel-storage
+        emptyDir: {}
